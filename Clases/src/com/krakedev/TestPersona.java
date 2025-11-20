@@ -12,30 +12,30 @@ public class TestPersona {
 		p = new Persona(); // 2.Instanciar un objeto Persona, referenciar a objeto p
 
 		// 3.accediendo a los atributos en consola
-		p.nombre = "Mateo";
-		p.edad = 22;
-		p.estatura = 1.64;
+		p.setNombre ("Mateo");
+		p.setEdad (22);
+		p.setEstatura (1.64);
 		System.out.println("---------------------");
-		System.out.println("Nombre: " + p.nombre);
-		System.out.println("Edad: " + p.edad);
-		System.out.println("Estatura: " + p.estatura);
+		System.out.println("Nombre: " + p.getNombre());
+		System.out.println("Edad: " + p.getEdad());
+		System.out.println("Estatura: " + p.getEstatura());
 		System.out.println("---------------------");
 
-		p2.nombre = "Roberto";
-		p2.edad = 23;
-		p2.estatura = 1.67;
-		System.out.println("Nombre: " + p2.nombre);
-		System.out.println("Edad: " + p2.edad);
-		System.out.println("Estatura: " + p2.estatura);
+		p2.setNombre ("Roberto");
+		p2.setEdad (23);
+		p2.setEstatura (1.67);
+		System.out.println("Nombre: " + p2.getNombre());
+		System.out.println("Edad: " + p2.getEdad());
+		System.out.println("Estatura: " + p2.getEstatura());
 
 		// 4.modificar los atributos
-		p.nombre = "Esteban";
-		p.edad = 45;
-		p.estatura = 1.56;
+		p.setNombre ("Esteban");
+		p.setEdad (45);
+		p.setEstatura (1.56);
 		System.out.println("---------------------");
-		System.out.println("Nombre: " + p.nombre);
-		System.out.println("Edad: " + p.edad);
-		System.out.println("Estatura: " + p.estatura);
+		System.out.println("Nombre: " + p.getNombre());
+		System.out.println("Edad: " + p.getEdad());
+		System.out.println("Estatura: " + p.getEstatura());
 		System.out.println("---------------------");
 
 	}
