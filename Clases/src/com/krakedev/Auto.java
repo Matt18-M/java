@@ -4,6 +4,16 @@ public class Auto {
 	private String marca;
 	private int anio;
 	private double precio;
+	
+	//constructor con parametros
+	public Auto(String marca,int anio, double precio) {
+		this.marca=marca;
+		this.anio=anio;
+		this.precio=precio;
+		
+	}
+	
+	
 	public String getMarca() {
 		return marca;
 	}
