@@ -1,0 +1,22 @@
+package com.cmc.repaso.test;
+import com.cmc.repaso.entidades.Estudiante;
+
+public class TestEstudiante {
+
+	public static void main(String[] args) {
+		       Estudiante estudiante1 = new Estudiante("Mateo");
+		        
+		       estudiante1.calificar(7.5);
+		        
+		    System.out.println("Nombre: " + estudiante1.getNombre());
+		    System.out.println("Nota: " + estudiante1.getNota());
+		    System.out.println("Resultado: " + estudiante1.getResultado());
+		        
+		    estudiante1.calificar(8.5);
+		    
+		    System.out.println("----Nota Modificada----");
+		    System.out.println("Nota: " + estudiante1.getNota());
+		    System.out.println("Resultado: " + estudiante1.getResultado());
+		}		
+	}
+
