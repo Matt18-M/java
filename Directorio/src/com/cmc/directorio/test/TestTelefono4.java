@@ -1,0 +1,28 @@
+package com.cmc.directorio.test;
+import com.cmc.directorio.entidades.*;
+
+public class TestTelefono4 {
+
+	public static void main(String[] args) {
+		
+		Telefono telefono1 = new Telefono("movi", "0981111111", 1);
+        Telefono telefono2 = new Telefono("claro", "0982222222", 2);
+        Telefono telefono3 = new Telefono("claro", "0983333333", 3);
+        Telefono telefono4 = new Telefono("movi", "0984444444", 4);
+        
+        // Crear objeto AdminTelefono
+        AdminTelefono admin = new AdminTelefono();
+        
+        // Invocar a contarClaro
+        int cantidadClaro = admin.contarClaro(telefono1, telefono2, telefono3, telefono4);
+        
+        System.out.println("=== RESULTADO DE CONTAR MÓVILES CLARO ===");
+        System.out.println("Cantidad de teléfonos con operadora 'claro': " + cantidadClaro);
+        
+        System.out.println("=== INFORMACIÓN DE LOS TELÉFONOS ===");
+        System.out.println("Teléfono 1 - Operadora: " + telefono1.getOperadora() + ", Número: " + telefono1.getNumero());
+        System.out.println("Teléfono 2 - Operadora: " + telefono2.getOperadora() + ", Número: " + telefono2.getNumero());
+        System.out.println("Teléfono 3 - Operadora: " + telefono3.getOperadora() + ", Número: " + telefono3.getNumero());
+        System.out.println("Teléfono 4 - Operadora: " + telefono4.getOperadora() + ", Número: " + telefono4.getNumero());
+    }
+}

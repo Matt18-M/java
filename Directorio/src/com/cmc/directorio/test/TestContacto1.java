@@ -1,0 +1,23 @@
+package com.cmc.directorio.test;
+import com.cmc.directorio.entidades.*;
+
+public class TestContacto1 {
+
+	public static void main(String[] args) {
+		 Telefono telef = new Telefono("movi", "0998765432", 30);
+	        
+	        // Instanciar un Contacto
+	        Contacto c = new Contacto("Mateo", "Molina", telef, 70.5);
+	        
+	        System.out.println("=== INFORMACIÓN DEL CONTACTO ===");
+	        System.out.println("Nombre: " + c.getNombre());
+	        System.out.println("Apellido: " + c.getApellido());
+	        System.out.println("Activo: " + c.isActivo());
+	        System.out.println("Peso: " + c.getPeso());
+	        System.out.println("Operadora: " + c.getTelefono().getOperadora());
+	        System.out.println("Número de teléfono: " + c.getTelefono().getNumero());
+	        System.out.println("Código: " + c.getTelefono().getCodigo());
+	        System.out.println("Tiene WhatsApp: " + c.getTelefono().isTieneWhatsapp());
+	        
+	    }
+	}
