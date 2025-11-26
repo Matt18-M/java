@@ -1,87 +1,80 @@
 package com.clearminds.maquina;
 import com.clearminds.componentes.*;
+import java.util.ArrayList;
 
 public class MaquinaDulces {
-    private Celda celda1;
-    private Celda celda2;
-    private Celda celda3;
-    private Celda celda4;
+    private ArrayList<Celda> celdas;
     private double saldo;
 
     // Constructor
     public MaquinaDulces() {
+        this.celdas = new ArrayList<Celda>();
+    }
+    
+    public void agregarCelda(Celda celda) {
+        celdas.add(celda);
+    }
+    
+
+    // Método agregarCelda 
+    public void agregarCelda(String codigoCelda) {
+        Celda celda = new Celda(codigoCelda);
+        celdas.add(celda);
     }
 
     // Método configurarMaquina
     public void configurarMaquina(String codigo1, String codigo2, String codigo3, String codigo4) {
-        this.celda1 = new Celda(codigo1);
-        this.celda2 = new Celda(codigo2);
-        this.celda3 = new Celda(codigo3);
-        this.celda4 = new Celda(codigo4);
+        this.celdas = new ArrayList<Celda>();
+        agregarCelda(codigo1);
+        agregarCelda(codigo2);
+        agregarCelda(codigo3);
+        agregarCelda(codigo4);
     }
 
-    // Método mostrarConfiguración
+    // metodo mostrarConfiguración
     public void mostrarConfiguracion() {
         System.out.println("Configuración de la máquina:");
-        System.out.println("Celda 1: " + celda1.getCodigo());
-        System.out.println("Celda 2: " + celda2.getCodigo());
-        System.out.println("Celda 3: " + celda3.getCodigo());
-        System.out.println("Celda 4: " + celda4.getCodigo());
-    }
-
-    // Método buscarCelda
-    public Celda buscarCelda(String codigoCelda) {
-        if (celda1.getCodigo().equals(codigoCelda)) {
-            return celda1;
-        } else if (celda2.getCodigo().equals(codigoCelda)) {
-            return celda2;
-        } else if (celda3.getCodigo().equals(codigoCelda)) {
-            return celda3;
-        } else if (celda4.getCodigo().equals(codigoCelda)) {
-            return celda4;
-        } else {
-            return null;
+        for (int i = 0; i < celdas.size(); i++) {
+            System.out.println("Celda " + (i + 1) + ": " + celdas.get(i).getCodigo());
         }
     }
 
-    // Método cargarProducto
-    public void cargarProducto(Producto producto, String codigoCelda, int stockInicial) {
+    // metodo buscarCelda
+    public Celda buscarCelda(String codigoCelda) {
+        for (Celda celda : celdas) {
+            if (celda.getCodigo().equals(codigoCelda)) {
+                return celda;
+            }
+        }
+        return null;
+    }
+
+    // metodo cargarProducto 
+    public void cargarProducto(Producto producto, String codigoCelda, int itemsInicial) {
         Celda celdaRecuperada = buscarCelda(codigoCelda);
         if (celdaRecuperada != null) {
-            celdaRecuperada.ingresarProducto(producto, stockInicial);
+            celdaRecuperada.ingresarProducto(producto, itemsInicial);
         }
     }
 
-    // Método mostrarProductos CORREGIDO (solo un método)
+    // metodo mostrarProductos
     public void mostrarProductos() {
-        System.out.println("*********CELDA " + celda1.getCodigo());
-        imprimirCeldaInfo(celda1);
-        
-        System.out.println("*********CELDA " + celda2.getCodigo());
-        imprimirCeldaInfo(celda2);
-        
-        System.out.println("*********CELDA " + celda3.getCodigo());
-        imprimirCeldaInfo(celda3);
-        
-        System.out.println("*********CELDA " + celda4.getCodigo());
-        imprimirCeldaInfo(celda4);
-        
+        for (Celda celda : celdas) {
+            if (celda.getProducto() != null) {
+                System.out.println("Celda:" + celda.getCodigo() + 
+                                 " Stock:" + celda.getStock() + 
+                                 " Producto:" + celda.getProducto().getNombre() + 
+                                 " Precio:" + celda.getProducto().getPrecio());
+            } else {
+                System.out.println("Celda:" + celda.getCodigo() + 
+                                 " Stock:" + celda.getStock() + 
+                                 " Sin Producto asignado");
+            }
+        }
         System.out.println("Saldo: " + this.saldo);
     }
 
-    // Método para imprimir información de una celda
-    private void imprimirCeldaInfo(Celda celda) {
-        System.out.println("Stock:" + celda.getStock());
-        if (celda.getProducto() != null) {
-            System.out.println("Nombre Producto:" + celda.getProducto().getNombre());
-            System.out.println("Precio Producto:" + celda.getProducto().getPrecio());
-            System.out.println("Código Producto:" + celda.getProducto().getCodigo());
-        } else {
-            System.out.println("La celda no tiene producto!!!");
-        }
-    }
-
-    // Método buscarProductoEnCelda
+    // metodo buscarProductoEnCelda 
     public Producto buscarProductoEnCelda(String codigoCelda) {
         Celda celda = buscarCelda(codigoCelda);
         if (celda != null && celda.getProducto() != null) {
@@ -90,7 +83,7 @@ public class MaquinaDulces {
         return null;
     }
 
-    // Método consultarPrecio
+    // metodo consultarPrecio
     public double consultarPrecio(String codigoCelda) {
         Producto producto = buscarProductoEnCelda(codigoCelda);
         if (producto != null) {
@@ -99,22 +92,17 @@ public class MaquinaDulces {
         return 0.0;
     }
 
-    // Método buscarCeldaProducto
+    // metodo buscarCeldaProducto 
     public Celda buscarCeldaProducto(String codigoProducto) {
-        if (celda1.getProducto() != null && celda1.getProducto().getCodigo().equals(codigoProducto)) {
-            return celda1;
-        } else if (celda2.getProducto() != null && celda2.getProducto().getCodigo().equals(codigoProducto)) {
-            return celda2;
-        } else if (celda3.getProducto() != null && celda3.getProducto().getCodigo().equals(codigoProducto)) {
-            return celda3;
-        } else if (celda4.getProducto() != null && celda4.getProducto().getCodigo().equals(codigoProducto)) {
-            return celda4;
-        } else {
-            return null;
+        for (Celda celda : celdas) {
+            if (celda.getProducto() != null && celda.getProducto().getCodigo().equals(codigoProducto)) {
+                return celda;
+            }
         }
+        return null;
     }
 
-    // Método incrementarProductos
+    // metodo incrementarProductos
     public void incrementarProductos(String codigoProducto, int cantidadItems) {
         Celda celdaEncontrada = buscarCeldaProducto(codigoProducto);
         if (celdaEncontrada != null) {
@@ -123,7 +111,7 @@ public class MaquinaDulces {
         }
     }
 
-    // Método vender
+    // metodo vender
     public void vender(String codigoCelda) {
         Celda celda = buscarCelda(codigoCelda);
         if (celda != null && celda.getProducto() != null && celda.getStock() > 0) {
@@ -136,7 +124,7 @@ public class MaquinaDulces {
         }
     }
 
-    // Método venderConCambio
+    // metodo venderConCambio
     public double venderConCambio(String codigoCelda, double valorIngresado) {
         Celda celda = buscarCelda(codigoCelda);
         if (celda != null && celda.getProducto() != null && celda.getStock() > 0) {
@@ -155,8 +143,30 @@ public class MaquinaDulces {
         }
         return valorIngresado;
     }
+    
+ // metodo buscarMenores
+    public ArrayList<Producto> buscarMenores(double limite) {
+        ArrayList<Producto> productosMenores = new ArrayList<Producto>();
+        
+        for (Celda celda : celdas) {
+            if (celda.getProducto() != null && celda.getProducto().getPrecio() <= limite) {
+                productosMenores.add(celda.getProducto());
+            }
+        }
+        
+        return productosMenores;
+    }
+    
 
     // Getters y Setters
+    public ArrayList<Celda> getCeldas() {
+        return celdas;
+    }
+
+    public void setCeldas(ArrayList<Celda> celdas) {
+        this.celdas = celdas;
+    }
+
     public double getSaldo() {
         return saldo;
     }
