@@ -1,0 +1,16 @@
+package com.krakedev.herencia;
+
+public class TestPersona {
+
+	public static void main(String[] args) {
+
+		Persona p = new Persona("0150560811","Mateo");
+		System.out.println("HOLAA");
+		System.out.println(p); //p.toString
+		
+		Cuenta c = new Cuenta("123456",560.43);
+		System.out.println(c);
+	}
+
+	
+}

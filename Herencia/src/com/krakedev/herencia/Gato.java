@@ -1,0 +1,18 @@
+package com.krakedev.herencia;
+
+public class Gato extends Animal {
+	
+	 @Override
+	public void dormir() {
+		System.out.println("Gato durmiendo placidamente");
+	}
+	 
+	 public void maullar() {
+		 System.out.println("MIAUUUUUUUU");
+	 }
+	 
+	 //sobrecarga
+	 public void maullar(String adjetivo) {
+		 System.out.println("gato maullando " + adjetivo);
+	 }
+}
