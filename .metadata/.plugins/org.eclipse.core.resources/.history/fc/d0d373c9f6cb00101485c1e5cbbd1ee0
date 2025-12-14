@@ -1,0 +1,99 @@
+package entidades;
+import java.util.ArrayList;
+
+public class Naipe {
+	 private ArrayList<Numero> numerosPosibles;
+	    private ArrayList<Carta> cartas;
+
+	    // Constructor vacío (sin cambios)
+	    public Naipe() {
+	        this.numerosPosibles = new ArrayList<>();
+	        this.cartas = new ArrayList<>();
+	        inicializarNumerosPosibles();
+	        inicializarCartas();
+	    }
+
+	    private void inicializarNumerosPosibles() {
+	        numerosPosibles.add(new Numero("A", 11));
+	        numerosPosibles.add(new Numero("2", 2));
+	        numerosPosibles.add(new Numero("3", 3));
+	        numerosPosibles.add(new Numero("4", 4));
+	        numerosPosibles.add(new Numero("5", 5));
+	        numerosPosibles.add(new Numero("6", 6));
+	        numerosPosibles.add(new Numero("7", 7));
+	        numerosPosibles.add(new Numero("8", 8));
+	        numerosPosibles.add(new Numero("9", 9));
+	        numerosPosibles.add(new Numero("10", 10));
+	        numerosPosibles.add(new Numero("J", 10));
+	        numerosPosibles.add(new Numero("Q", 10));
+	        numerosPosibles.add(new Numero("K", 10));
+	    }
+
+	    private void inicializarCartas() {
+	        Palos palos = new Palos();
+	        String[] todosLosPalos = {
+	            palos.getCorazonRojo(),
+	            palos.getCorazonNegro(),
+	            palos.getDiamante(),
+	            palos.getTrebol()
+	        };
+	        
+	        for (Numero numero : numerosPosibles) {
+	            for (String palo : todosLosPalos) {
+	                Carta carta = new Carta(numero, palo);
+	                cartas.add(carta);
+	            }
+	        }
+	    }
+
+	    public ArrayList<Carta> getCartas() {
+	        return cartas;
+	    }
+
+	    /**
+	     * Método barajar - mezcla las cartas en orden aleatorio
+	     * @return ArrayList<Carta> con las cartas barajadas
+	     */
+	    public ArrayList<Carta> barajar() {
+	        // Crear ArrayList auxiliar
+	        ArrayList<Carta> auxiliar = new ArrayList<>();
+	        
+	        // Realizar 100 iteraciones para barajar aleatoriamente
+	        for (int i = 0; i < 100; i++) {
+	            // Obtener posición aleatoria
+	            int posicion = Random.obtenerPosicion();
+	            
+	            // Obtener la carta en esa posición
+	            Carta carta = cartas.get(posicion);
+	            
+	            // Validar el estado de la carta
+	            if ("N".equals(carta.getEstado())) {
+	                // Si estado es N, agregar al auxiliar y cambiar estado a C
+	                auxiliar.add(carta);
+	                carta.setEstado("C");
+	            }
+	            // Si estado es C, no hacer nada (la carta ya fue agregada)
+	        }
+	        
+	        // Agregar las cartas restantes que no se agregaron durante las 100 iteraciones
+	        for (Carta carta : cartas) {
+	            if ("N".equals(carta.getEstado())) {
+	                auxiliar.add(carta);
+	                // Opcional: cambiar estado a C también para estas cartas
+	                carta.setEstado("C");
+	            }
+	        }
+	        
+	        return auxiliar;
+	    }
+	    
+	    /**
+	     * Método auxiliar para resetear el estado de todas las cartas a "N"
+	     * Útil si se quiere barajar múltiples veces
+	     */
+	    public void resetearEstadoCartas() {
+	        for (Carta carta : cartas) {
+	            carta.setEstado("N");
+	        }
+	    }
+	}

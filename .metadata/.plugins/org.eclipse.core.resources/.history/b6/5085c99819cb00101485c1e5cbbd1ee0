@@ -1,0 +1,127 @@
+package krakedev.entidades;
+import java.util.ArrayList;
+
+public class Curso {
+	    private ArrayList<Estudiante> estudiantes;
+
+	    // Constructor
+	    public Curso() {
+	        this.estudiantes = new ArrayList<>();
+	    }
+
+	    public Curso(ArrayList<Estudiante> estudiantes) {
+	        this.estudiantes = estudiantes;
+	    }
+
+	    // Getters y Setters
+	    public ArrayList<Estudiante> getEstudiantes() {
+	        return estudiantes;
+	    }
+
+	    public void setEstudiantes(ArrayList<Estudiante> estudiantes) {
+	        this.estudiantes = estudiantes;
+	    }
+
+	    // Métodos útiles
+	    public void agregarEstudiante(Estudiante estudiante) {
+	        this.estudiantes.add(estudiante);
+	    }
+
+	    public void eliminarEstudiante(Estudiante estudiante) {
+	        this.estudiantes.remove(estudiante);
+	    }
+
+	    public int cantidadEstudiantes() {
+	        return this.estudiantes.size();
+	    }
+	    
+	 // Método buscarEstudiantePorCedula
+	    public Estudiante buscarEstudiantePorCedula(String cedula) {
+	        for (Estudiante estudiante : estudiantes) {
+	            if (estudiante.getCedula().equals(cedula)) {
+	                System.out.println("Estudiante encontrado: " + estudiante.getNombre() + " " + estudiante.getApellido());
+	                return estudiante;
+	            }
+	        }
+	        System.out.println("No se encontró ningún estudiante con la cédula: " + cedula);
+	        return null;
+	    }
+	    
+	 // Método matricularEstudiantes
+	    public void matricularEstudiante(Estudiante estudiante) {
+	        // Verificar si el estudiante ya está en el curso usando su cédula
+	        Estudiante estudianteExistente = buscarEstudiantePorCedula(estudiante.getCedula());
+	        
+	        if (estudianteExistente == null) {
+	            // Si no existe, agregar al estudiante
+	            this.estudiantes.add(estudiante);
+	            System.out.println("Estudiante " + estudiante.getNombre() + " " + estudiante.getApellido() + " matriculado exitosamente");
+	        } else {
+	            // Si ya existe, mostrar mensaje
+	            System.out.println("Error: El estudiante con cédula " + estudiante.getCedula() + " ya está matriculado en el curso");
+	        }
+	    }
+	    
+	 // Método calcularPromedioCurso
+	    public double calcularPromedioCurso() {
+	        if (estudiantes.isEmpty()) {
+	            System.out.println("El curso no tiene estudiantes matriculados");
+	            return 0.0;
+	        }
+	        
+	        double sumaPromedios = 0;
+	        int estudiantesConNotas = 0;
+	        
+	        for (Estudiante estudiante : estudiantes) {
+	            double promedioEstudiante = estudiante.calcularPromedioNotasEstudiante();
+	            if (promedioEstudiante > 0) {
+	                sumaPromedios += promedioEstudiante;
+	                estudiantesConNotas++;
+	            }
+	        }
+	        
+	        if (estudiantesConNotas == 0) {
+	            System.out.println("Ningún estudiante tiene notas registradas");
+	            return 0.0;
+	        }
+	        
+	        double promedioCurso = sumaPromedios / estudiantesConNotas;
+	        return promedioCurso;
+	    }
+	    
+	 // Método mostrar
+	    public void mostrar() {
+	        String resultado = "Curso [estudiantes=[";
+	        
+	        // Iterar sobre el ArrayList de estudiantes
+	        for (int i = 0; i < estudiantes.size(); i++) {
+	            if (i > 0) {
+	                resultado += ", ";
+	            }
+	            Estudiante estudiante = estudiantes.get(i);
+	            resultado += "Estudiante [nombre=" + estudiante.getNombre() +
+	                        ", apellido=" + estudiante.getApellido() +
+	                        ", cedula=" + estudiante.getCedula() +
+	                        ", notas=[";
+	            
+	            // Iterar sobre las notas del estudiante
+	            ArrayList<Nota> notas = estudiante.getNotas();
+	            for (int j = 0; j < notas.size(); j++) {
+	                if (j > 0) {
+	                    resultado += ", ";
+	                }
+	                Nota nota = notas.get(j);
+	                resultado += "Nota [materia=Materia [codigo=" + nota.getMateria().getCodigo() +
+	                            ", nombre=" + nota.getMateria().getNombre() +
+	                            "], calificacion=" + nota.getCalificacion() + "]";
+	            }
+	            
+	            resultado += "]]";
+	        }
+	        
+	        resultado += "]]";
+	        System.out.println(resultado);
+	    }
+	    
+	    
+}

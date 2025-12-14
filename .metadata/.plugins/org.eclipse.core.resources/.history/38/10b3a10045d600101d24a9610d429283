@@ -1,0 +1,13 @@
+package com.krakedev.herencia;
+
+//herencia 
+public class Perro extends Animal{
+	
+	public void ladrar() {
+		System.out.println("WOAOOOOOOOO");
+	}
+	
+	public void dormir() {
+		System.out.println("PERRO DURMIENDO");
+	}
+}

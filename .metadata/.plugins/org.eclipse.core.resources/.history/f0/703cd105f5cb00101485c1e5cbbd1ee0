@@ -1,0 +1,65 @@
+package servicios;
+
+import java.util.ArrayList;
+
+public class Juego {
+    private Naipe naipe;
+    private ArrayList<ArrayList<Carta>> cartasJugadores;
+
+    /**
+     * Constructor de Juego
+     * @param idsJugadores ArrayList con los IDs de los jugadores
+     */
+    public Juego(ArrayList<String> idsJugadores) {
+        this.naipe = new Naipe();
+        this.cartasJugadores = new ArrayList<>();
+        
+        // Por cada jugador en el arreglo, crear un ArrayList de Carta
+        for (int i = 0; i < idsJugadores.size(); i++) {
+            ArrayList<Carta> cartasJugador = new ArrayList<>();
+            cartasJugadores.add(cartasJugador);
+        }
+    }
+
+    // Getters
+    public Naipe getNaipe() {
+        return naipe;
+    }
+
+    public ArrayList<ArrayList<Carta>> getCartasJugadores() {
+        return cartasJugadores;
+    }
+
+    /**
+     * Método para mostrar información del juego
+     */
+    public void mostrarInformacionJuego() {
+        System.out.println("=== INFORMACIÓN DEL JUEGO ===");
+        System.out.println("Total de jugadores: " + cartasJugadores.size());
+        
+        for (int i = 0; i < cartasJugadores.size(); i++) {
+            System.out.println("Jugador " + (i + 1) + " tiene " + 
+                             cartasJugadores.get(i).size() + " cartas");
+        }
+    }
+    
+    /**
+     * Método para mostrar las cartas de todos los jugadores
+     */
+    public void mostrarCartasJugadores() {
+        System.out.println("=== CARTAS DE LOS JUGADORES ===");
+        for (int i = 0; i < cartasJugadores.size(); i++) {
+            System.out.println("Jugador " + (i + 1) + ":");
+            ArrayList<Carta> cartas = cartasJugadores.get(i);
+            if (cartas.isEmpty()) {
+                System.out.println("  No tiene cartas");
+            } else {
+                for (Carta carta : cartas) {
+                    System.out.print("  ");
+                    carta.mostrarInformacion();
+                }
+            }
+            System.out.println();
+        }
+    }
+}

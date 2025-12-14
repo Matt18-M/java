@@ -1,0 +1,12 @@
+package com.krakedev.test;
+import com.krakedev.composicion.*;
+
+public class TestPersona {
+
+	public static void main(String[] args) {
+		Persona persona1 = new Persona();
+		
+		
+	}
+
+}

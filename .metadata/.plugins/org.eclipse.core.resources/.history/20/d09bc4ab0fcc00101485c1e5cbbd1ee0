@@ -1,0 +1,89 @@
+package com.cmc.evaluacion.servicios;
+
+import com.cmc.evaluacion.entidades.Prestamo;
+
+public class CalculadoraAmortizacion {
+    
+    public static double calcularCuota(Prestamo prestamo) {
+        double monto = prestamo.getMonto();
+        double tasaInteresMensual = prestamo.getInteres() / 100 / 12;
+        int numeroPagos = prestamo.getPlazo();
+        
+        double factor = Math.pow(1 + tasaInteresMensual, numeroPagos);
+        double cuota = (monto * tasaInteresMensual * factor) / (factor - 1);
+        
+        return cuota;
+    }
+    
+    public static void generarTabla(Prestamo prestamo) {
+        // 1. Calcular la cuota constante
+        double cuotaConstante = calcularCuota(prestamo);
+        
+        // 2. Inicializar cuotas en el arreglo
+        for (int i = 0; i < prestamo.getPlazo(); i++) {
+            Cuota cuota = new Cuota(i + 1);  // Número de cuota iniciando en 1
+            cuota.setCuota(cuotaConstante);
+            prestamo.getCuotas()[i] = cuota;
+        }
+        
+        // 3. Establecer valor al inicio del período en la primera cuota
+        prestamo.getCuotas()[0].setInicio(prestamo.getMonto());
+        
+        // 5. Calcular valores para todas las cuotas
+        for (int i = 0; i < prestamo.getPlazo(); i++) {
+            Cuota cuotaActual = prestamo.getCuotas()[i];
+            Cuota cuotaSiguiente = (i < prestamo.getPlazo() - 1) ? prestamo.getCuotas()[i + 1] : null;
+            
+            calcularValoresCuota(prestamo.getInteres(), cuotaActual, cuotaSiguiente);
+        }
+        
+        // 6. Ajustar última cuota
+        ajustarUltimaCuota(prestamo.getCuotas()[prestamo.getPlazo() - 1]);
+    }
+    
+    private static void calcularValoresCuota(double interesAnual, Cuota cuotaActual, Cuota cuotaSiguiente) {
+        double tasaInteresMensual = interesAnual / 100 / 12;
+        
+        // Calcular interés
+        double interes = cuotaActual.getInicio() * tasaInteresMensual;
+        cuotaActual.setInteres(interes);
+        
+        // Calcular abono a capital
+        double abonoCapital = cuotaActual.getCuota() - interes;
+        cuotaActual.setAbonoCapital(abonoCapital);
+        
+        // Calcular saldo
+        double saldo = cuotaActual.getInicio() - abonoCapital;
+        cuotaActual.setSaldo(saldo);
+        
+        // Establecer inicio para la siguiente cuota (si existe)
+        if (cuotaSiguiente != null) {
+            cuotaSiguiente.setInicio(saldo);
+        }
+    }
+    
+    private static void ajustarUltimaCuota(Cuota ultimaCuota) {
+        // Ajustar la última cuota para que el saldo sea 0
+        double diferencia = ultimaCuota.getSaldo();
+        if (Math.abs(diferencia) > 0.01) {  // Si hay diferencia significativa
+            double nuevaCuota = ultimaCuota.getCuota() + diferencia;
+            ultimaCuota.setCuota(nuevaCuota);
+            
+            // Recalcular el abono a capital
+            double nuevoAbonoCapital = ultimaCuota.getAbonoCapital() + diferencia;
+            ultimaCuota.setAbonoCapital(nuevoAbonoCapital);
+            
+            // Establecer saldo a 0
+            ultimaCuota.setSaldo(0.0);
+        }
+    }
+    
+    public static void mostrarTabla(Prestamo prestamo) {
+        System.out.println("Nº | Cuota | Inicio | Interés | Abono Capital | Saldo");
+        System.out.println("------------------------------------------------------");
+        
+        for (Cuota cuota : prestamo.getCuotas()) {
+            cuota.mostrarPrestamo();
+        }
+    }
+}

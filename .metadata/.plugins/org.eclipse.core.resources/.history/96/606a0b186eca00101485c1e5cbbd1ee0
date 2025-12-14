@@ -1,0 +1,11 @@
+package com.krakedev.colecciones;
+
+import java.util.ArrayList;
+
+public class Ejercicio2 {
+
+	public static void main(String[] args) {
+		ArrayList<Personas> personas;
+	}
+
+}

@@ -1,0 +1,44 @@
+package com.krakedev.test;
+import com.krakedev.composicion.*;
+
+public class TestPersona {
+
+	public static void main(String[] args) {
+		Persona p1 = new Persona();
+		p1.setNombre("Mateo");
+		p1.setApellido("Molina");
+		
+		//correccion del error
+		Direccion dir = new Direccion();
+		dir.setCallePrincipal("Balzay");
+		dir.setCalleSecundaria("San jose");
+		dir.setNumero("123");
+		
+		p1.setDireccion(dir);
+		
+		
+		
+		String nombre = p1.getNombre();
+		Direccion d1 = p1.getDireccion();
+		
+		System.out.println(nombre);
+		
+		//se produce nullpointerException porque d1 esta null y trato de invocar la variable 
+		System.out.println(d1.getCallePrincipal());
+		//el nullpointerException sucede cuando en null.algunMetodo()
+	
+		
+		p1.imprimir();
+		
+		Persona p2 = new Persona();
+		Direccion d2 = new Direccion("Totora","Eloy", "134");
+		p2.setNombre("Roberto");
+		p2.setDireccion(d2);
+		p2.imprimir();
+		
+		Persona p3 = new Persona();
+		p3.setDireccion(new Direccion("ww","xx","123"));
+		p3.imprimir();
+	}
+
+}

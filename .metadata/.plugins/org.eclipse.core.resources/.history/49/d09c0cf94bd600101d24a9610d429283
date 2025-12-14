@@ -1,0 +1,12 @@
+package com.krakedev.estaticos;
+
+public class TestDiaSemana {
+
+	public static void main(String[] args) {
+		
+		DiaSemana ds = new DiaSemana();
+		int dia = ds.LUNES;
+		System.out.println(dia);
+	}
+
+}

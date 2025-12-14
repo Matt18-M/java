@@ -1,0 +1,60 @@
+package entidades;
+import java.util.ArrayList;
+
+public class Naipe {
+	private ArrayList<Numero> numerosPosibles;
+    private ArrayList<Carta> cartas;
+
+    // Constructor vacío
+    public Naipe() {
+        this.numerosPosibles = new ArrayList<>();
+        this.cartas = new ArrayList<>();
+        
+        // Inicializar los números posibles con sus valores
+        inicializarNumerosPosibles();
+        
+        // Crear las 52 cartas combinando números con palos
+        inicializarCartas();
+    }
+
+    private void inicializarNumerosPosibles() {
+        numerosPosibles.add(new Numero("A", 11));
+        numerosPosibles.add(new Numero("2", 2));
+        numerosPosibles.add(new Numero("3", 3));
+        numerosPosibles.add(new Numero("4", 4));
+        numerosPosibles.add(new Numero("5", 5));
+        numerosPosibles.add(new Numero("6", 6));
+        numerosPosibles.add(new Numero("7", 7));
+        numerosPosibles.add(new Numero("8", 8));
+        numerosPosibles.add(new Numero("9", 9));
+        numerosPosibles.add(new Numero("10", 10));
+        numerosPosibles.add(new Numero("J", 10));
+        numerosPosibles.add(new Numero("Q", 10));
+        numerosPosibles.add(new Numero("K", 10));
+    }
+
+    private void inicializarCartas() {
+        Palos palos = new Palos();
+        
+        // Obtener todos los palos disponibles
+        String[] todosLosPalos = {
+            palos.getCorazonRojo(),
+            palos.getCorazonNegro(),
+            palos.getDiamante(),
+            palos.getTrebol()
+        };
+        
+        // Combinar cada número con cada palo
+        for (Numero numero : numerosPosibles) {
+            for (String palo : todosLosPalos) {
+                Carta carta = new Carta(numero, palo);
+                cartas.add(carta);
+            }
+        }
+    }
+
+    // Solo getter para cartas (ningún otro getter ni setter)
+    public ArrayList<Carta> getCartas() {
+        return cartas;
+    }
+}

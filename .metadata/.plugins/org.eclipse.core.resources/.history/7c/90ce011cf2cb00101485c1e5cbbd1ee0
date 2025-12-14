@@ -1,0 +1,138 @@
+package com.krakedev.evaluacion;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+public class Directorio {
+    private ArrayList<Contacto> contactos;
+    private ArrayList<Contacto> correctos;
+    private ArrayList<Contacto> incorrectos;
+    private Date fechaModificacion;
+
+    // Constructor
+    public Directorio() {
+        this.contactos = new ArrayList<Contacto>();
+        this.correctos = new ArrayList<Contacto>();
+        this.incorrectos = new ArrayList<Contacto>();
+        this.fechaModificacion = new Date();
+    }
+
+    // Getters
+    public ArrayList<Contacto> getContactos() {
+        return contactos;
+    }
+
+    public ArrayList<Contacto> getCorrectos() {
+        return correctos;
+    }
+
+    public ArrayList<Contacto> getIncorrectos() {
+        return incorrectos;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    // Setters
+    public void setContactos(ArrayList<Contacto> contactos) {
+        this.contactos = contactos;
+        this.fechaModificacion = new Date();
+    }
+
+    public void setCorrectos(ArrayList<Contacto> correctos) {
+        this.correctos = correctos;
+    }
+
+    public void setIncorrectos(ArrayList<Contacto> incorrectos) {
+        this.incorrectos = incorrectos;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    // Método para agregar un contacto con validación de cédula única
+    public boolean agregarContacto(Contacto contacto) {
+        // Validar si ya existe un contacto con la misma cédula
+        if (buscarPorCedula(contacto.getCedula()) != null) {
+            return false; // Ya existe, no se puede agregar
+        }
+        
+        // Si no existe, agregar el contacto
+        boolean agregado = contactos.add(contacto);
+        if (agregado) {
+            this.fechaModificacion = new Date(); // Actualizar fecha de modificación
+        }
+        return agregado;
+    }
+
+    // Método para buscar un contacto por cédula (SOLO busca, NO imprime)
+    public Contacto buscarPorCedula(String cedula) {
+        for (Contacto contacto : contactos) {
+            if (contacto.getCedula().equals(cedula)) {
+                return contacto;
+            }
+        }
+        return null;
+    }
+
+    // Método para consultar la última modificación en formato específico
+    public String consultarUltimaModificacion() {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return formato.format(fechaModificacion);
+    }
+
+    // Método para contar contactos sin dirección asignada
+    public int contarPerdidos() {
+        int contador = 0;
+        
+        for (Contacto contacto : contactos) {
+            if (contacto.getDireccion() == null) {
+                contador++;
+            }
+        }
+        
+        return contador;
+    }
+
+    // Método para contar contactos con teléfono Convencional en estado C
+    public int contarFijos() {
+        int contador = 0;
+        
+        for (Contacto contacto : contactos) {
+            ArrayList<Telefono> telefonos = contacto.getTelefonos();
+            for (Telefono telefono : telefonos) {
+                if ("Convencional".equals(telefono.getTipo()) && "C".equals(telefono.getEstado())) {
+                    contador++;
+                    break; // Solo contar el contacto una vez aunque tenga múltiples teléfonos fijos
+                }
+            }
+        }
+        
+        return contador;
+    }
+
+    // Método para depurar contactos según si tienen dirección o no
+    public void depurar() {
+        // Limpiar las listas correctos e incorrectos antes de empezar
+        correctos.clear();
+        incorrectos.clear();
+        
+        // Clasificar los contactos
+        for (Contacto contacto : contactos) {
+            if (contacto.getDireccion() != null) {
+                correctos.add(contacto); // Con dirección
+            } else {
+                incorrectos.add(contacto); // Sin dirección
+            }
+        }
+        
+        // Vaciar la lista original de contactos
+        contactos.clear();
+        
+        // Actualizar fecha de modificación
+        this.fechaModificacion = new Date();
+    }
+}

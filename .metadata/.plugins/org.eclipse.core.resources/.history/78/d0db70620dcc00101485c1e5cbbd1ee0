@@ -1,0 +1,19 @@
+package com.cmc.evaluacion.servicios;
+
+import com.cmc.evaluacion.etidades.Prestamo;
+
+public class CalculadoraAmortizacion {
+	 public double calcularCuota(Prestamo prestamo) {
+	        double monto = prestamo.getMonto();
+	        double tasaInteresMensual = prestamo.getInteres() / 100 / 12;
+	        int numeroPagos = prestamo.getPlazo();
+	        
+	        // Fórmula de la cuota en el sistema francés:
+	        // Cuota = (Monto * Tasa * (1 + Tasa)^Plazo) / ((1 + Tasa)^Plazo - 1)
+	        
+	        double factor = Math.pow(1 + tasaInteresMensual, numeroPagos);
+	        double cuota = (monto * tasaInteresMensual * factor) / (factor - 1);
+	        
+	        return cuota;
+	    }
+}

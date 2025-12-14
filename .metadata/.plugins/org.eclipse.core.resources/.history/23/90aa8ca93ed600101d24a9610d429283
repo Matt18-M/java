@@ -1,0 +1,6 @@
+package com.krakedev.herencia;
+
+//herencia 
+public class Perro extends Animal{
+
+}

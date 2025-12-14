@@ -1,0 +1,27 @@
+package com.cmc.directorio.entidades;
+
+public class AdminTelefono {
+
+	public void activarMensajeria(Telefono telefono) {
+		if (telefono.getOperadora().equals("movi")) {
+            telefono.setTieneWhatsapp(true);
+		}
+	}
+	
+	//contador 
+	public int contarMovi(Telefono telf1, Telefono telf2, Telefono telf3) {
+        int contador = 0;
+        
+        if (telf1.getOperadora().equals("movi")) {
+            contador++;
+        }
+        if (telf2.getOperadora().equals("movi")) {
+            contador++;
+        }
+        if (telf3.getOperadora().equals("movi")) {
+            contador++;
+        }
+        
+        return contador;
+    }
+}

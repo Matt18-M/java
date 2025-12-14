@@ -1,0 +1,37 @@
+package krakedev.entidades;
+import java.util.ArrayList;
+
+public class Curso {
+	    private ArrayList<Estudiante> estudiantes;
+
+	    // Constructor
+	    public Curso() {
+	        this.estudiantes = new ArrayList<>();
+	    }
+
+	    public Curso(ArrayList<Estudiante> estudiantes) {
+	        this.estudiantes = estudiantes;
+	    }
+
+	    // Getters y Setters
+	    public ArrayList<Estudiante> getEstudiantes() {
+	        return estudiantes;
+	    }
+
+	    public void setEstudiantes(ArrayList<Estudiante> estudiantes) {
+	        this.estudiantes = estudiantes;
+	    }
+
+	    // Métodos útiles
+	    public void agregarEstudiante(Estudiante estudiante) {
+	        this.estudiantes.add(estudiante);
+	    }
+
+	    public void eliminarEstudiante(Estudiante estudiante) {
+	        this.estudiantes.remove(estudiante);
+	    }
+
+	    public int cantidadEstudiantes() {
+	        return this.estudiantes.size();
+	    }
+}

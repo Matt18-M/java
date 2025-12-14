@@ -1,0 +1,14 @@
+package com.krakedev.demo.test;
+import com.krakedev.demo.*;
+
+public class TestProducto {
+
+	public static void main(String[] args) {
+		
+		Producto producto1=new Producto(1234,"Manilla","Accesorio de mano",1.2);
+		
+		System.out.println("----PRODUCTO----");
+		producto1.imprimir();
+	}
+
+}

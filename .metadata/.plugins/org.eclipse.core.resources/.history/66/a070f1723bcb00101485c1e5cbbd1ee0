@@ -1,0 +1,62 @@
+package com.krakedev.evaluacion;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Directorio {
+    private ArrayList<Contacto> contactos;
+    private Date fechaModificacion;
+
+    // Constructor
+    public Directorio() {
+        this.contactos = new ArrayList<Contacto>();
+        this.fechaModificacion = new Date();
+    }
+
+    // Getters
+    public ArrayList<Contacto> getContactos() {
+        return contactos;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    // Setters
+    public void setContactos(ArrayList<Contacto> contactos) {
+        this.contactos = contactos;
+        this.fechaModificacion = new Date();
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    // Método para agregar un contacto
+    public boolean agregarContacto(Contacto contacto) {
+        boolean agregado = contactos.add(contacto);
+        if (agregado) {
+            this.fechaModificacion = new Date();
+        }
+        return agregado;
+    }
+
+    // Método para buscar un contacto por cédula con el mismo formato que imprimir()
+    public Contacto buscarPorCedula(String cedula) {
+        for (Contacto contacto : contactos) {
+            if (contacto.getCedula().equals(cedula)) {
+                // Usar el mismo formato que el método imprimir() de Contacto
+                System.out.println("***" + contacto.getNombre() + " " + contacto.getApellido() + "*****");
+                if (contacto.getDireccion() != null) {
+                    System.out.println("**Direction: " + contacto.getDireccion().getCallePrincipal() + " y " + contacto.getDireccion().getCalleSecundaria() + "**");
+                } else {
+                    System.out.println("No tiene asociada una dirección");
+                }
+                System.out.println();
+                return contacto;
+            }
+        }
+        System.out.println("Contacto con cédula " + cedula + " no encontrado.");
+        return null;
+    }
+}

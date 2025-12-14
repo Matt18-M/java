@@ -1,0 +1,10 @@
+package com.krakedev.colecciones;
+
+public class TestAdminPersonas {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

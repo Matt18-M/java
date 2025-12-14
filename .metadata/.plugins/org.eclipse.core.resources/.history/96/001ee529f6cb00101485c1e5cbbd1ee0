@@ -1,0 +1,154 @@
+package servicios;
+import entidades.*;
+import java.util.ArrayList;
+
+public class Juego {
+    private Naipe naipe;
+    private ArrayList<ArrayList<Carta>> cartasJugadores;
+    private ArrayList<Carta> naipeBarajado;
+    private ArrayList<String> idsJugadores; // Agregamos este atributo para manejar los IDs
+
+    /**
+     * Constructor de Juego
+     * @param idsJugadores ArrayList con los IDs de los jugadores
+     */
+    public Juego(ArrayList<String> idsJugadores) {
+        this.naipe = new Naipe();
+        this.cartasJugadores = new ArrayList<>();
+        this.idsJugadores = new ArrayList<>(idsJugadores); // Guardar los IDs
+        
+        // Instanciar el naipe y barajarlo
+        this.naipeBarajado = naipe.barajar();
+        
+        // Por cada jugador en el arreglo, crear un ArrayList de Carta
+        for (int i = 0; i < idsJugadores.size(); i++) {
+            ArrayList<Carta> cartasJugador = new ArrayList<>();
+            cartasJugadores.add(cartasJugador);
+        }
+    }
+
+    // Getters
+    public Naipe getNaipe() {
+        return naipe;
+    }
+
+    public ArrayList<ArrayList<Carta>> getCartasJugadores() {
+        return cartasJugadores;
+    }
+    
+    public ArrayList<Carta> getNaipeBarajado() {
+        return naipeBarajado;
+    }
+    
+    public ArrayList<String> getIdsJugadores() {
+        return idsJugadores;
+    }
+
+    /**
+     * Método entregarCartas - distribuye cartas a los jugadores en secuencia
+     * @param cartasPorJugador número de cartas que debe recibir cada jugador
+     */
+    public void entregarCartas(int cartasPorJugador) {
+        int totalJugadores = cartasJugadores.size();
+        int cartaActual = 0; // Índice para seguir la posición en el naipe barajado
+        
+        // Repetir el proceso según el número de cartas por jugador
+        for (int ronda = 0; ronda < cartasPorJugador; ronda++) {
+            // Para cada ronda, dar una carta a cada jugador en secuencia
+            for (int jugador = 0; jugador < totalJugadores; jugador++) {
+                // Verificar que aún hay cartas disponibles
+                if (cartaActual < naipeBarajado.size()) {
+                    // Obtener la carta actual del naipe barajado
+                    Carta carta = naipeBarajado.get(cartaActual);
+                    
+                    // Agregar la carta al jugador correspondiente
+                    cartasJugadores.get(jugador).add(carta);
+                    
+                    // Mover a la siguiente carta
+                    cartaActual++;
+                } else {
+                    System.out.println("¡No hay más cartas en el naipe!");
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * Método devolverTotal - retorna la suma de los valores de todas las cartas de un jugador
+     * @param idJugador el ID del jugador cuyo total se quiere calcular
+     * @return la suma de los valores de las cartas del jugador, o -1 si el jugador no existe
+     */
+    public int devolverTotal(String idJugador) {
+        // Buscar el índice del jugador en la lista de IDs
+        int indiceJugador = idsJugadores.indexOf(idJugador);
+        
+        // Verificar si el jugador existe
+        if (indiceJugador == -1) {
+            System.out.println("Error: Jugador '" + idJugador + "' no encontrado.");
+            return -1;
+        }
+        
+        // Obtener las cartas del jugador
+        ArrayList<Carta> cartasJugador = cartasJugadores.get(indiceJugador);
+        
+        // Calcular la suma de los valores de las cartas
+        int total = 0;
+        for (Carta carta : cartasJugador) {
+            total += carta.getNumero().getValor();
+        }
+        
+        return total;
+    }
+
+    /**
+     * Método para mostrar información del juego
+     */
+    public void mostrarInformacionJuego() {
+        System.out.println("=== INFORMACIÓN DEL JUEGO ===");
+        System.out.println("Total de jugadores: " + cartasJugadores.size());
+        System.out.println("Cartas en naipe barajado: " + naipeBarajado.size());
+        
+        for (int i = 0; i < cartasJugadores.size(); i++) {
+            String idJugador = idsJugadores.get(i);
+            int total = devolverTotal(idJugador);
+            System.out.println("Jugador " + (i + 1) + " (" + idJugador + "): " + 
+                             cartasJugadores.get(i).size() + " cartas, " +
+                             "Total: " + total + " puntos");
+        }
+    }
+    
+    /**
+     * Método para mostrar las cartas de todos los jugadores
+     */
+    public void mostrarCartasJugadores() {
+        System.out.println("=== CARTAS DE LOS JUGADORES ===");
+        for (int i = 0; i < cartasJugadores.size(); i++) {
+            String idJugador = idsJugadores.get(i);
+            int total = devolverTotal(idJugador);
+            
+            System.out.println("Jugador " + (i + 1) + " (" + idJugador + ") - Total: " + total + " puntos:");
+            ArrayList<Carta> cartas = cartasJugadores.get(i);
+            if (cartas.isEmpty()) {
+                System.out.println("  No tiene cartas");
+            } else {
+                for (Carta carta : cartas) {
+                    System.out.print("  ");
+                    carta.mostrarInformacion();
+                }
+            }
+            System.out.println();
+        }
+    }
+    
+    /**
+     * Método para mostrar las primeras cartas del naipe barajado
+     */
+    public void mostrarNaipeBarajado(int cantidad) {
+        System.out.println("=== PRIMERAS " + cantidad + " CARTAS DEL NAIPE BARAJADO ===");
+        for (int i = 0; i < Math.min(cantidad, naipeBarajado.size()); i++) {
+            System.out.print("Posición " + i + ": ");
+            naipeBarajado.get(i).mostrarInformacion();
+        }
+    }
+}

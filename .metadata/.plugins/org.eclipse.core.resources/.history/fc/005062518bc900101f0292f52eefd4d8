@@ -1,0 +1,14 @@
+package com.krakedev.test;
+import com.krakedev.composicion.*;
+
+public class TestAdminProducto {
+
+	public static void main(String[] args) {
+
+		AdminProducto admin = new AdminProducto();
+		Producto productoA = new Producto("Doritos", 0.50);
+		Producto productoB = new Producto("Papitas", 0.55);
+		
+	}
+
+}

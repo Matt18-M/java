@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AppTest" project="ejemplojunit" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="com.krakedev.ejemplojunit.AppTest" time="0.017" displayname="AppTest" uniqueid="[engine:junit-jupiter]/[class:com.krakedev.ejemplojunit.AppTest]">
+    <testcase name="shouldAnswerWithTrue" classname="com.krakedev.ejemplojunit.AppTest" time="0.017" displayname="shouldAnswerWithTrue()" uniqueid="[engine:junit-jupiter]/[class:com.krakedev.ejemplojunit.AppTest]/[method:shouldAnswerWithTrue()]"/>
+  </testsuite>
+</testrun>

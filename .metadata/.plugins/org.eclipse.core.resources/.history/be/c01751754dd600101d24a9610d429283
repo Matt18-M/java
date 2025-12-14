@@ -1,0 +1,6 @@
+package com.krakedev.estaticos.ejercicio.logica;
+import java.util.ArrayList;
+
+public class AdminAlarmas {
+
+}

@@ -1,0 +1,160 @@
+package servicios;
+import entidades.*;
+import java.util.ArrayList;
+
+public class Juego {
+    private Naipe naipe;
+    private ArrayList<ArrayList<Carta>> cartasJugadores;
+    private ArrayList<Carta> naipeBarajado;
+    private ArrayList<String> idsJugadores;
+
+    /**
+     * Constructor de Juego
+     * @param idsJugadores ArrayList con los IDs de los jugadores
+     */
+    public Juego(ArrayList<String> idsJugadores) {
+        this.naipe = new Naipe();
+        this.cartasJugadores = new ArrayList<>();
+        this.idsJugadores = new ArrayList<>(idsJugadores);
+        
+        // Instanciar el naipe y barajarlo
+        this.naipeBarajado = naipe.barajar();
+        
+        // Por cada jugador en el arreglo, crear un ArrayList de Carta
+        for (int i = 0; i < idsJugadores.size(); i++) {
+            ArrayList<Carta> cartasJugador = new ArrayList<>();
+            cartasJugadores.add(cartasJugador);
+        }
+    }
+
+    // Getters
+    public Naipe getNaipe() {
+        return naipe;
+    }
+
+    public ArrayList<ArrayList<Carta>> getCartasJugadores() {
+        return cartasJugadores;
+    }
+    
+    public ArrayList<Carta> getNaipeBarajado() {
+        return naipeBarajado;
+    }
+    
+    public ArrayList<String> getIdsJugadores() {
+        return idsJugadores;
+    }
+
+    /**
+     * Método entregarCartas - distribuye cartas a los jugadores en secuencia
+     * @param cartasPorJugador número de cartas que debe recibir cada jugador
+     */
+    public void entregarCartas(int cartasPorJugador) {
+        int totalJugadores = cartasJugadores.size();
+        int cartaActual = 0;
+        
+        for (int ronda = 0; ronda < cartasPorJugador; ronda++) {
+            for (int jugador = 0; jugador < totalJugadores; jugador++) {
+                if (cartaActual < naipeBarajado.size()) {
+                    Carta carta = naipeBarajado.get(cartaActual);
+                    cartasJugadores.get(jugador).add(carta);
+                    cartaActual++;
+                } else {
+                    System.out.println("¡No hay más cartas en el naipe!");
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * Método devolverTotal - retorna la suma de los valores de todas las cartas de un jugador
+     * @param idJugador el ID del jugador cuyo total se quiere calcular
+     * @return la suma de los valores de las cartas del jugador, o -1 si el jugador no existe
+     */
+    public int devolverTotal(String idJugador) {
+        int indiceJugador = idsJugadores.indexOf(idJugador);
+        
+        if (indiceJugador == -1) {
+            System.out.println("Error: Jugador '" + idJugador + "' no encontrado.");
+            return -1;
+        }
+        
+        ArrayList<Carta> cartasJugador = cartasJugadores.get(indiceJugador);
+        int total = 0;
+        for (Carta carta : cartasJugador) {
+            total += carta.getNumero().getValor();
+        }
+        
+        return total;
+    }
+
+    /**
+     * Método determinarGanador - retorna el ID del jugador con mayor puntaje
+     * @return el ID del jugador ganador, o null si no hay jugadores
+     */
+    public String determinarGanador() {
+        // Verificar que hay jugadores
+        if (idsJugadores.isEmpty()) {
+            System.out.println("No hay jugadores en el juego.");
+            return null;
+        }
+        
+        // Variables auxiliares
+        String idGanador = idsJugadores.get(0); // Primer jugador
+        int sumaGanador = devolverTotal(idGanador); // Suma del primer jugador
+        
+        // Barrerse todos los demás elementos del arreglo
+        for (int i = 1; i < idsJugadores.size(); i++) {
+            String idActual = idsJugadores.get(i);
+            int sumaActual = devolverTotal(idActual);
+            
+            // Si tiene una cantidad mayor o igual, pasa a ser el nuevo ganador
+            if (sumaActual >= sumaGanador) {
+                idGanador = idActual;
+                sumaGanador = sumaActual;
+            }
+        }
+        
+        return idGanador;
+    }
+
+    /**
+     * Método para mostrar información del juego
+     */
+    public void mostrarInformacionJuego() {
+        System.out.println("=== INFORMACIÓN DEL JUEGO ===");
+        System.out.println("Total de jugadores: " + cartasJugadores.size());
+        System.out.println("Cartas en naipe barajado: " + naipeBarajado.size());
+        
+        for (int i = 0; i < cartasJugadores.size(); i++) {
+            String idJugador = idsJugadores.get(i);
+            int total = devolverTotal(idJugador);
+            System.out.println("Jugador " + (i + 1) + " (" + idJugador + "): " + 
+                             cartasJugadores.get(i).size() + " cartas, " +
+                             "Total: " + total + " puntos");
+        }
+    }
+    
+    /**
+     * Método para mostrar las cartas de todos los jugadores
+     */
+    public void mostrarCartasJugadores() {
+        System.out.println("=== CARTAS DE LOS JUGADORES ===");
+        for (int i = 0; i < cartasJugadores.size(); i++) {
+            String idJugador = idsJugadores.get(i);
+            int total = devolverTotal(idJugador);
+            
+            System.out.println("Jugador " + (i + 1) + " (" + idJugador + ") - Total: " + total + " puntos:");
+            ArrayList<Carta> cartas = cartasJugadores.get(i);
+            if (cartas.isEmpty()) {
+                System.out.println("  No tiene cartas");
+            } else {
+                for (Carta carta : cartas) {
+                    System.out.print("  ");
+                    carta.mostrarInformacion();
+                }
+            }
+            System.out.println();
+        }
+    }
+}

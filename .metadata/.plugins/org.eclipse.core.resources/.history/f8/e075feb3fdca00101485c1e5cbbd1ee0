@@ -1,0 +1,10 @@
+package com.krakedev.colecciones;
+
+public class TestAdminPersonas {
+
+	public static void main(String[] args) {
+		AdminPersonas admin = new AdminPersonas();
+		admin.agregar(new Persona ("Mateo","Molina",22));
+	}
+
+}

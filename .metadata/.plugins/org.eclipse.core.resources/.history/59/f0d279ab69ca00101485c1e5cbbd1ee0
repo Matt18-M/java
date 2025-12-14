@@ -1,0 +1,24 @@
+package com.krakedev.colecciones;
+
+import java.util.ArrayList;
+
+public class Ejercicio1 {
+
+	public static void main(String[] args) {
+		
+		ArrayList<String> cadenas;
+		String valoRecuperado;
+		
+		cadenas = new ArrayList <String>(); 
+		
+		System.out.println(cadenas.size());
+		
+		cadenas.add("uno"); //0
+		cadenas.add("dos"); //1
+		System.out.println(cadenas.size());
+		
+		valorRecuperado=cadenas.get(0);
+	
+	}
+
+}

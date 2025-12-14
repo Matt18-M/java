@@ -1,0 +1,19 @@
+package com.cmc.repaso.entidades;
+
+public class Estudiante {
+	private String nombre;
+	private double nota;
+	private String resultado;
+	
+	//consturctor
+	public Estudiante(String nombre, double nota, String resultado) {
+		this.nombre=nombre;
+		this.nota=nota;
+		this.resultado=resultado;
+		
+	public void Calificar if(double nota) {
+		
+	}
+		
+	}
+}

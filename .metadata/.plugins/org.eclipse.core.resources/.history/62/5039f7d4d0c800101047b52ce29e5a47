@@ -1,0 +1,11 @@
+package com.cmc.repaso.test;
+import com.cmc.repaso.Estudiante;
+
+public class TestEstudiante {
+
+	public static void main(String[] args) {
+
+		
+	}
+
+}

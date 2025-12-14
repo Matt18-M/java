@@ -1,0 +1,55 @@
+package com.cmc.repaso.test;
+import com.cmc.repaso.entidades.Item;
+
+public class TestItem {
+
+	public static void main(String[] args) {
+
+		System.out.println("=== PRIMER PRODUCTO ===");
+        Item producto1 = new Item();
+        producto1.setNombre("Pantalon");
+        producto1.setProductosActuales(20);
+        producto1.setProductosVendidos(0);
+        producto1.setProductosDevueltos(0);
+        
+       
+        System.out.println("Estado inicial:");
+        producto1.imprimir();
+        
+        System.out.println("--- Realizando ventas ---");
+        producto1.vender(5);      
+        producto1.imprimir();
+        
+        producto1.vender(3);      
+        producto1.imprimir();
+        
+        System.out.println("--- Realizando devoluciones ---");
+        producto1.devolver(2);   
+        producto1.imprimir();
+        
+        producto1.devolver(1);    
+        producto1.imprimir();
+        
+     // Crear segundo producto
+        System.out.println("=== SEGUNDO PRODUCTO ===");
+        Item producto2 = new Item();
+        producto2.setNombre("Reloj");
+        producto2.setProductosActuales(15);
+        producto2.setProductosVendidos(0);
+        producto2.setProductosDevueltos(0);
+        
+        System.out.println("Estado inicial:");
+        producto2.imprimir();
+        
+        System.out.println("--- Realizando ventas ---");
+        producto2.vender(8);
+        System.out.println("--- Realizando devoluciones ---");
+        producto2.devolver(3);
+        System.out.println("--- Realizando ventas ---");
+        producto2.vender(4);
+        
+        System.out.println("Estado final:");
+        producto2.imprimir();
+	}
+
+}

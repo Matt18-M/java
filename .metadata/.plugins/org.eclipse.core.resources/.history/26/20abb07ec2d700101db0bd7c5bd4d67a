@@ -1,0 +1,19 @@
+package com.krakedev.ejercicios;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class Admin {
+	private static Logger Logger=LogManager.getLogger(Admin.class);
+	
+	public void agregar() {
+		Logger.info ("mensaje de info");
+		Logger.warn ("mensaje de info");
+		Logger.trace ("mensaje de info");
+		
+		Logger.error ("mensaje de info");
+		
+		Logger.debug ("mensaje de info");
+	}
+	
+}

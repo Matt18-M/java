@@ -1,0 +1,106 @@
+package com.krakedev.evaluacion;
+import java.util.ArrayList;
+
+public class Contacto {
+    private String cedula;
+    private String nombre;
+    private String apellido;
+    private Direccion direccion;
+    private ArrayList<Telefono> telefonos;
+
+    // Constructor
+    public Contacto(String cedula, String nombre, String apellido) {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefonos = new ArrayList<Telefono>(); // Inicializar la lista
+    }
+
+    // Getters
+    public String getCedula() {
+        return cedula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public ArrayList<Telefono> getTelefonos() {
+        return telefonos;
+    }
+
+    // Setters
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setTelefonos(ArrayList<Telefono> telefonos) {
+        this.telefonos = telefonos;
+    }
+
+    // Método para agregar un teléfono a la lista
+    public void agregarTelefono(Telefono telefono) {
+        this.telefonos.add(telefono);
+    }
+
+    // Método para mostrar solo los teléfonos con estado "C"
+    public void mostrarTelefonos() {
+        System.out.println("Telefonos con estado 'C':");
+        boolean tieneTelefonosCorrectos = false;
+        
+        for (Telefono telefono : telefonos) {
+            if ("C".equals(telefono.getEstado())) {
+                System.out.println("Número: " + telefono.getNumero() + ", Tipo: " + telefono.getTipo());
+                tieneTelefonosCorrectos = true;
+            }
+        }
+        
+        if (!tieneTelefonosCorrectos) {
+            System.out.println("No tiene teléfonos con estado correcto");
+        }
+    }
+
+    // Método para recuperar teléfonos con estado "E" (Error)
+    public ArrayList<Telefono> recuperarIncorrectos() {
+        ArrayList<Telefono> telefonosIncorrectos = new ArrayList<Telefono>();
+        
+        for (Telefono telefono : telefonos) {
+            if ("E".equals(telefono.getEstado())) {
+                telefonosIncorrectos.add(telefono);
+            }
+        }
+        
+        return telefonosIncorrectos;
+    }
+
+    // Método imprimir modificado para el formato requerido
+    public void imprimir() {
+        System.out.println("***" + nombre + " " + apellido + "*****");
+        if (direccion != null) {
+            System.out.println("**Direction: " + direccion.getCallePrincipal() + " y " + direccion.getCalleSecundaria() + "**");
+        } else {
+            System.out.println("No tiene asociada una dirección");
+        }
+        System.out.println();
+    }
+}

@@ -1,0 +1,16 @@
+package com.krakedev.colecciones;
+
+import java.util.ArrayList;
+
+public class AdminPersonas {
+	private  ArrayList<Persona> personas;
+	
+	//constructor
+	public AdminPersonas() {
+		personas = new ArrayList<Persona>();
+	}
+	
+	public void agregar(Persona persona) {
+		personas.add(persona);
+	}
+}

@@ -1,0 +1,13 @@
+package com.krakedev.test;
+import com.krakedev.composicion.*;
+
+public class TestPersona {
+
+	public static void main(String[] args) {
+		Persona p1 = new Persona();
+		String nombre = p1.getNombre();
+		
+		
+	}
+
+}

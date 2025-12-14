@@ -1,0 +1,39 @@
+package com.krakedev.estaticos.ejercicio.test;
+
+	import com.krakedev.estaticos.ejercicio.entidades.Alarma;
+	import com.krakedev.estaticos.ejercicio.utils.DiasSemana;
+	import com.krakedev.estaticos.ejercicio.logica.AdminAlarmas;
+
+	public class TestAlarmas {
+	    public static void main(String[] args) {
+	        AdminAlarmas admin = new AdminAlarmas();
+	        
+	        // Instanciar alarmas usando las constantes de DiasSemana
+	        Alarma alarma1 = new Alarma(DiasSemana.LUNES, 5, 45);
+	        Alarma alarma2 = new Alarma(DiasSemana.MIERCOLES, 14, 8);
+	        Alarma alarma3 = new Alarma(DiasSemana.VIERNES, 8, 30);
+	        Alarma alarma4 = new Alarma(DiasSemana.SABADO, 23, 5);
+	        Alarma alarma5 = new Alarma(DiasSemana.DOMINGO, 12, 0);
+	        
+	        // Agregar alarmas usando el método agregarAlarma
+	        admin.agregarAlarma(alarma1);
+	        admin.agregarAlarma(alarma2);
+	        admin.agregarAlarma(alarma3);
+	        admin.agregarAlarma(alarma4);
+	        admin.agregarAlarma(alarma5);
+	        
+	        // Recuperar la lista de alarmas
+	        java.util.ArrayList<Alarma> alarmasActuales = admin.getAlarmas();
+	        
+	        // Imprimir la información
+	        System.out.println("=== ALARMAS REGISTRADAS ===");
+	        System.out.println(alarmasActuales);
+	        
+	        // También se puede recorrer individualmente para mayor claridad:
+	        System.out.println("\n=== LISTA DETALLADA ===");
+	        for (Alarma alarma : alarmasActuales) {
+	            System.out.println(alarma);
+	        }
+	    }
+	}
+

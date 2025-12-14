@@ -1,0 +1,41 @@
+package com.cmc.directorio.test;
+import com.cmc.directorio.entidades.*;
+
+public class TestActivos {
+
+	public static void main(String[] args) {
+	
+		Telefono telef = new Telefono("claro", "0987654321", 50);
+        Contacto contacto = new Contacto("Laura", "Silva", telef, 60.0);
+        
+        System.out.println("=== ESTADO INICIAL DEL CONTACTO ===");
+        System.out.println("Nombre: " + contacto.getNombre());
+        System.out.println("Apellido: " + contacto.getApellido());
+        System.out.println("Operadora: " + contacto.getTelefono().getOperadora());
+        System.out.println("Número: " + contacto.getTelefono().getNumero());
+        System.out.println("Tiene WhatsApp: " + contacto.getTelefono().isTieneWhatsapp());
+        System.out.println("Activo: " + contacto.isActivo());
+        
+        // Invocar el método activarUsuario
+        AdminContactos adminContactos = new AdminContactos();
+        adminContactos.activarUsuario(contacto);
+		
+        
+        System.out.println("=== ESTADO DESPUÉS DE ACTIVAR USUARIO ===");
+        System.out.println("Nombre: " + contacto.getNombre());
+        System.out.println("Apellido: " + contacto.getApellido());
+        System.out.println("Operadora: " + contacto.getTelefono().getOperadora());
+        System.out.println("Número: " + contacto.getTelefono().getNumero());
+        System.out.println("Tiene WhatsApp: " + contacto.getTelefono().isTieneWhatsapp());
+        System.out.println("Activo: " + contacto.isActivo());
+        
+        // Verificación del comportamiento
+        System.out.println("=== VERIFICACIÓN DEL COMPORTAMIENTO ===");
+        if (!contacto.isActivo()) {
+            System.out.println("✓ COMPORTAMIENTO CORRECTO: El contacto NO se activó porque no tiene WhatsApp");
+        } else {
+            System.out.println("✗ COMPORTAMIENTO INCORRECTO: El contacto se activó a pesar de no tener WhatsApp");
+        }
+	}
+
+}

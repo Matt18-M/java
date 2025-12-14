@@ -1,0 +1,53 @@
+package com.krakedev.evaluacion;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Directorio {
+    private ArrayList<Contacto> contactos;
+    private Date fechaModificacion;
+
+    // Constructor
+    public Directorio() {
+        this.contactos = new ArrayList<Contacto>();
+        this.fechaModificacion = new Date(); // Fecha actual al crear el directorio
+    }
+
+    // Getters
+    public ArrayList<Contacto> getContactos() {
+        return contactos;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    // Setters
+    public void setContactos(ArrayList<Contacto> contactos) {
+        this.contactos = contactos;
+        this.fechaModificacion = new Date(); // Actualizar fecha al modificar
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    // Método para agregar un contacto
+    public boolean agregarContacto(Contacto contacto) {
+        boolean agregado = contactos.add(contacto);
+        if (agregado) {
+            this.fechaModificacion = new Date(); // Actualizar fecha de modificación
+        }
+        return agregado;
+    }
+
+    // Método para buscar un contacto por cédula
+    public Contacto buscarPorCedula(String cedula) {
+        for (Contacto contacto : contactos) {
+            if (contacto.getCedula().equals(cedula)) {
+                return contacto;
+            }
+        }
+        return null; // Retorna null si no encuentra el contacto
+    }
+}

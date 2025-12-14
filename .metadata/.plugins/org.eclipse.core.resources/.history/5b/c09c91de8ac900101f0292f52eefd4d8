@@ -1,0 +1,11 @@
+package com.krakedev.composicion;
+
+public class AdminProducto {
+	//recibe 2 productos
+	//retorna el producto mayor precio
+	//si tienen el mismo precio retornan null
+	
+	public Producto buscarMasCaro(Producto p1, Producto p2) {
+		
+	}
+}

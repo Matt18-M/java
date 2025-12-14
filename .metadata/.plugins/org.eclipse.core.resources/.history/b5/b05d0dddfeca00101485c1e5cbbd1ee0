@@ -1,0 +1,27 @@
+package com.krakedev.colecciones;
+
+public class TestAdminPersonas {
+
+	public static void main(String[] args) {
+		AdminPersonas admin = new AdminPersonas();
+		admin.agregar(new Persona ("Mateo","Molina",22));
+		admin.agregar(new Persona ("Roberto","Buele",25));
+		admin.agregar(new Persona ("Peter","Parker",22));
+		
+		
+		admin.imprimir();
+	}
+	
+}
+
+
+	public Persona buscarPorNombre(String nombre) {
+		
+		Persona personaEncontrada=null;
+		for(int i=0;i<personas.size();i++) {
+			elementoPersona=personas.get(i);
+			System.out.println(elementoPersona.getNombre()+"-"+elementoPersona.getEdad());
+		}
+		return personaEncontrada;
+	
+}

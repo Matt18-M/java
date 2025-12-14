@@ -1,0 +1,18 @@
+package com.cmc.evaluacion.servicios;
+
+import com.cmc.evaluacion.entidades.Prestamo;
+
+public class CalculadoraAmortizacion {
+    
+    // Cambiar a método estático
+    public static double calcularCuota(Prestamo prestamo) {
+        double monto = prestamo.getMonto();
+        double tasaInteresMensual = prestamo.getInteres() / 100 / 12;
+        int numeroPagos = prestamo.getPlazo();
+        
+        double factor = Math.pow(1 + tasaInteresMensual, numeroPagos);
+        double cuota = (monto * tasaInteresMensual * factor) / (factor - 1);
+        
+        return cuota;
+    }
+}

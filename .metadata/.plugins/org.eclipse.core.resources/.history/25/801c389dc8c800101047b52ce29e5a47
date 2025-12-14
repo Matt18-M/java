@@ -1,0 +1,11 @@
+package com.krakedev.controlflujo.test;
+import com.krakedev.*;
+
+public class TestValidador {
+
+	public static void main(String[] args) {
+			
+		Validador validador = new Validador();
+	}
+
+}

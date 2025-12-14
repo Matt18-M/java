@@ -1,0 +1,10 @@
+package entidades;
+
+public class Random {
+	  public static int obtenerPosicion() {
+	        // Math.random() devuelve valores entre 0.0 (incluido) y 1.0 (excluido)
+	        // Multiplicamos por 52 para obtener valores entre 0.0 y 51.999...
+	        // Al convertir a int, se trunca la parte decimal, dando valores entre 0 y 51
+	        return (int) (Math.random() * 52);
+	    }
+}

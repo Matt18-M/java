@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AppTest" project="ejemplojunit" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.krakedev.ejemplojunit.AppTest" time="0.021" displayname="AppTest" uniqueid="[engine:junit-jupiter]/[class:com.krakedev.ejemplojunit.AppTest]">
+    <testcase name="shouldAnswerWithTrue" classname="com.krakedev.ejemplojunit.AppTest" time="0.017" displayname="shouldAnswerWithTrue()" uniqueid="[engine:junit-jupiter]/[class:com.krakedev.ejemplojunit.AppTest]/[method:shouldAnswerWithTrue()]"/>
+    <testcase name="testSumar" classname="com.krakedev.ejemplojunit.AppTest" time="0.001" displayname="testSumar()" uniqueid="[engine:junit-jupiter]/[class:com.krakedev.ejemplojunit.AppTest]/[method:testSumar()]"/>
+    <testcase name="testRestar" classname="com.krakedev.ejemplojunit.AppTest" time="0.001" displayname="testRestar()" uniqueid="[engine:junit-jupiter]/[class:com.krakedev.ejemplojunit.AppTest]/[method:testRestar()]"/>
+  </testsuite>
+</testrun>

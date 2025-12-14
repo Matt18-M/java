@@ -1,0 +1,16 @@
+package com.cmc.repaso.test;
+import com.cmc.repaso.entidades.*;
+
+public class TestValidacion {
+
+	public static void main(String[] args) {
+		Validacion validar = new Validacion ();
+		
+		validar.validarMonto(10);
+		validar.validarMonto(5);
+		validar.validarMonto(1);
+		validar.validarMonto(-1);
+		validar.validarMonto(-3);
+	}
+
+}

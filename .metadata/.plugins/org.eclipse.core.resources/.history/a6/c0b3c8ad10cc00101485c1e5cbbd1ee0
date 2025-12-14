@@ -1,0 +1,50 @@
+package com.cmc.evaluacion.servicios;
+
+import java.util.ArrayList;
+import com.cmc.evaluacion.entidades.Cliente;
+import com.cmc.evaluacion.entidades.Prestamo;
+
+public class Banco {
+    private ArrayList<Prestamo> prestamos;
+    private ArrayList<Cliente> clientes;
+    
+    // Constructor
+    public Banco() {
+        this.prestamos = new ArrayList<>();
+        this.clientes = new ArrayList<>();
+    }
+    
+    // Getters
+    public ArrayList<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+    
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+    
+    // Método buscarCliente
+    public Cliente buscarCliente(String cedula) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getCedula().equals(cedula)) {
+                return cliente;
+            }
+        }
+        return null; // Retorna null si no encuentra el cliente
+    }
+    
+    // Método registrarCliente
+    public void registrarCliente(Cliente cliente) {
+        // Verificar si el cliente ya existe
+        Cliente clienteExistente = buscarCliente(cliente.getCedula());
+        
+        if (clienteExistente == null) {
+            // El cliente no existe, se puede registrar
+            clientes.add(cliente);
+            System.out.println("Cliente registrado exitosamente: " + cliente.getCedula());
+        } else {
+            // El cliente ya existe
+            System.out.println("El cliente con cédula " + cliente.getCedula() + " ya existe.");
+        }
+    }
+}

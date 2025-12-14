@@ -1,0 +1,11 @@
+package com.cmc.directorio.test;
+import com.cmc.directorio.entidades.*;
+
+public class TestContactos1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

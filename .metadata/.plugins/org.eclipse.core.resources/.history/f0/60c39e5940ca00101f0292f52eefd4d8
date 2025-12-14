@@ -1,0 +1,28 @@
+package com.cmc.directorio.test;
+import com.cmc.directorio.entidades.*;
+
+public class TestContacto1 {
+
+	public static void main(String[] args) {
+		 Telefono telef = new Telefono("movi", "0998765432", 30);
+	        
+	        // Instanciar un Contacto y referenciarlo con c
+	        Contacto c = new Contacto("Juan", "Pérez", telef, 70.5);
+	        
+	        // Imprimir en consola la información del contacto creado, 
+	        // incluyendo la operadora y el número de teléfono
+	        System.out.println("=== INFORMACIÓN DEL CONTACTO ===");
+	        System.out.println("Nombre: " + c.getNombre());
+	        System.out.println("Apellido: " + c.getApellido());
+	        System.out.println("Activo: " + c.isActivo());
+	        System.out.println("Peso: " + c.getPeso());
+	        System.out.println("Operadora: " + c.getTelefono().getOperadora());
+	        System.out.println("Número de teléfono: " + c.getTelefono().getNumero());
+	        System.out.println("Código: " + c.getTelefono().getCodigo());
+	        System.out.println("Tiene WhatsApp: " + c.getTelefono().isTieneWhatsapp());
+	        
+	        // O usando toString()
+	        System.out.println("\n=== USANDO toString() ===");
+	        System.out.println(c);
+	    }
+	}

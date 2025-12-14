@@ -1,0 +1,107 @@
+package entidades;
+
+import java.util.ArrayList;
+
+public class Estudiante {
+    private String nombre;
+    private String apellido;
+    private String cedula;
+    private ArrayList<Nota> notas;
+
+    // Constructores
+    public Estudiante() {
+        this.notas = new ArrayList<>();
+    }
+
+    public Estudiante(String nombre, String apellido, String cedula) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+        this.notas = new ArrayList<>();
+    }
+
+    public Estudiante(String nombre, String apellido, String cedula, ArrayList<Nota> notas) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+        this.notas = notas;
+    }
+
+    // Getters y Setters
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public ArrayList<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(ArrayList<Nota> notas) {
+        this.notas = notas;
+    }
+
+    // Método agregarNota con validaciones
+    public void agregarNota(Nota nuevaNota) {
+        // Validar que la calificación esté entre 0 y 10
+        if (nuevaNota.getCalificacion() < 0 || nuevaNota.getCalificacion() > 10) {
+            System.out.println("Error: La calificación debe estar entre 0 y 10");
+            return;
+        }
+        
+        // Validar que no exista una nota con el mismo código de materia
+        String codigoMateriaNueva = nuevaNota.getMateria().getCodigo();
+        for (Nota notaExistente : notas) {
+            if (notaExistente.getMateria().getCodigo().equals(codigoMateriaNueva)) {
+                System.out.println("Error: Ya existe una nota para la materia con código: " + codigoMateriaNueva);
+                return;
+            }
+        }
+        
+        // Si pasa todas las validaciones, agregar la nota
+        this.notas.add(nuevaNota);
+        System.out.println("Nota agregada exitosamente para la materia: " + nuevaNota.getMateria().getNombre());
+    }
+
+    // Método para eliminar nota (se mantiene igual)
+    public void eliminarNota(Nota nota) {
+        this.notas.remove(nota);
+    }
+
+    public double calcularPromedio() {
+        if (notas.isEmpty()) {
+            return 0.0;
+        }
+        
+        double suma = 0;
+        for (Nota nota : notas) {
+            suma += nota.getCalificacion();
+        }
+        return suma / notas.size();
+    }
+
+    // Método mostrar
+    public void mostrar() {
+        System.out.println("Estudiante [nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula + ", notas=" + notas + "]");
+    }
+
+}
