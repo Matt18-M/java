@@ -1,12 +1,17 @@
 package com.krakedev.persistencia.servicios;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.krakedev.persistencia.entidades.EstadoCivil;
 import com.krakedev.persistencia.entidades.Persona;
 import com.krakedev.persistencia.utils.ConexionBDD;
 
@@ -33,7 +38,12 @@ public class AdminPersonas {
             ps.setString(1, persona.getCedula());
             ps.setString(2, persona.getNombre());
             ps.setString(3, persona.getApellido());
-            ps.setString(4, persona.getEstadoCivil().getCodigo());  
+            
+            if (persona.getEstadoCivil() != null && persona.getEstadoCivil().getCodigo() != null) {
+                ps.setString(4, persona.getEstadoCivil().getCodigo());
+            } else {
+                ps.setNull(4, java.sql.Types.CHAR);
+            }
             
             if (persona.getEstatura() != null) {
                 ps.setDouble(5, persona.getEstatura());
@@ -41,9 +51,24 @@ public class AdminPersonas {
                 ps.setNull(5, java.sql.Types.DECIMAL);
             }
             
-            ps.setDate(6, new java.sql.Date(persona.getFechaNacimiento().getTime()));
-            ps.setTime(7, persona.getHoraNacimiento());
-            ps.setBigDecimal(8, persona.getCantidadAhorrada());
+            if (persona.getFechaNacimiento() != null) {
+                ps.setDate(6, new java.sql.Date(persona.getFechaNacimiento().getTime()));
+            } else {
+                ps.setNull(6, java.sql.Types.DATE);
+            }
+            
+            if (persona.getHoraNacimiento() != null) {
+                ps.setTime(7, persona.getHoraNacimiento());
+            } else {
+                ps.setNull(7, java.sql.Types.TIME);
+            }
+            
+            if (persona.getCantidadAhorrada() != null) {
+                ps.setBigDecimal(8, persona.getCantidadAhorrada());
+            } else {
+                ps.setNull(8, java.sql.Types.DECIMAL);
+            }
+            
             ps.setInt(9, persona.getNumeroHijos());
             
             LOGGER.debug("Ejecutando inserción");
@@ -53,13 +78,13 @@ public class AdminPersonas {
             
         } catch (Exception e) {
             LOGGER.error("ERROR al insertar persona", e);
-            throw new Exception("ERROR al insertar");
+            throw new Exception("ERROR al insertar: " + e.getMessage());
         } finally {
             try {
+                if (ps != null) ps.close();
                 if (con != null) con.close();
             } catch (SQLException e) {
                 LOGGER.error("ERROR al cerrar conexión", e);
-                throw new Exception("ERROR con la base de datos");
             }
         }
     }
@@ -91,7 +116,12 @@ public class AdminPersonas {
             
             ps.setString(1, persona.getNombre());
             ps.setString(2, persona.getApellido());
-            ps.setString(3, persona.getEstadoCivil().getCodigo());
+            
+            if (persona.getEstadoCivil() != null && persona.getEstadoCivil().getCodigo() != null) {
+                ps.setString(3, persona.getEstadoCivil().getCodigo());
+            } else {
+                ps.setNull(3, java.sql.Types.CHAR);
+            }
             
             if (persona.getEstatura() != null) {
                 ps.setDouble(4, persona.getEstatura());
@@ -99,7 +129,11 @@ public class AdminPersonas {
                 ps.setNull(4, java.sql.Types.DECIMAL);
             }
             
-            ps.setDate(5, new java.sql.Date(persona.getFechaNacimiento().getTime()));
+            if (persona.getFechaNacimiento() != null) {
+                ps.setDate(5, new java.sql.Date(persona.getFechaNacimiento().getTime()));
+            } else {
+                ps.setNull(5, java.sql.Types.DATE);
+            }
             
             if (persona.getHoraNacimiento() != null) {
                 ps.setTime(6, persona.getHoraNacimiento());
@@ -135,7 +169,6 @@ public class AdminPersonas {
                 if (con != null) con.close();
             } catch (SQLException e) {
                 LOGGER.error("ERROR al cerrar recursos", e);
-                throw new Exception("ERROR al cerrar conexión");
             }
         }
     }
@@ -185,8 +218,153 @@ public class AdminPersonas {
                 if (con != null) con.close();
             } catch (SQLException e) {
                 LOGGER.error("ERROR al cerrar recursos", e);
-                throw new Exception("ERROR al cerrar conexión");
             }
         }
+    }
+    
+    //metodo busqueda por nombre(agregando los demas datos)
+    
+    public static ArrayList<Persona> buscarPorNombre(String nombreBusqueda) throws Exception {
+        ArrayList<Persona> personas = new ArrayList<Persona>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConexionBDD.conectar();
+            ps = con.prepareStatement("select * from personas where nombre like ?");
+            ps.setString(1, "%" + nombreBusqueda + "%");
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Obtener todos los campos 
+                String cedula = rs.getString("cedula");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String estadoCivilCodigo = rs.getString("estado_civil_codigo");
+                
+                double estatura = 0.0;
+                if (rs.getObject("estatura") != null) {
+                    estatura = rs.getDouble("estatura");
+                }
+                
+                java.util.Date fechaNacimiento = null;
+                java.sql.Date sqlFecha = rs.getDate("fecha_nacimiento");
+                if (sqlFecha != null) {
+                    fechaNacimiento = new java.util.Date(sqlFecha.getTime());
+                }
+                
+                Time horaNacimiento = rs.getTime("hora_nacimiento");
+                
+                
+                int numeroHijos = rs.getInt("numero_hijos");
+
+                Persona p = new Persona();
+                p.setCedula(cedula);
+                p.setNombre(nombre);
+                p.setApellido(apellido);
+                
+                
+                if (estadoCivilCodigo != null) {
+                    EstadoCivil ec = new EstadoCivil();
+                    ec.setCodigo(estadoCivilCodigo);
+                    p.setEstadoCivil(ec);
+                }
+                
+                p.setEstatura(estatura);
+                p.setFechaNacimiento(fechaNacimiento);
+                p.setHoraNacimiento(horaNacimiento);
+                p.setNumeroHijos(numeroHijos);
+
+                personas.add(p);
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("ERROR al buscar por nombre: " + nombreBusqueda, e);
+            throw new Exception("ERROR al buscar por nombre: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                LOGGER.error("ERROR al cerrar recursos en buscarPorNombre", e);
+            }
+        }
+
+        return personas;
+    }
+    
+    //metodo busqueda por cedula
+    public static Persona buscarPorCedula(String cedulaBusqueda) throws Exception {
+        Persona persona = null;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConexionBDD.conectar();
+            ps = con.prepareStatement("select * from personas where cedula = ?");
+            ps.setString(1, cedulaBusqueda);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Obtener todos los campos
+                String cedula = rs.getString("cedula");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String estadoCivilCodigo = rs.getString("estado_civil_codigo");
+                
+                Double estatura = null;
+                if (rs.getObject("estatura") != null) {
+                    estatura = rs.getDouble("estatura");
+                }
+                
+                java.util.Date fechaNacimiento = null;
+                java.sql.Date sqlFecha = rs.getDate("fecha_nacimiento");
+                if (sqlFecha != null) {
+                    fechaNacimiento = new java.util.Date(sqlFecha.getTime());
+                }
+                
+                Time horaNacimiento = rs.getTime("hora_nacimiento");
+                
+                int numeroHijos = rs.getInt("numero_hijos");
+
+                persona = new Persona();
+                persona.setCedula(cedula);
+                persona.setNombre(nombre);
+                persona.setApellido(apellido);
+                
+                
+                if (estadoCivilCodigo != null) {
+                    EstadoCivil ec = new EstadoCivil();
+                    ec.setCodigo(estadoCivilCodigo);
+                    persona.setEstadoCivil(ec);
+                }
+                
+                persona.setEstatura(estatura);
+                persona.setFechaNacimiento(fechaNacimiento);
+                persona.setHoraNacimiento(horaNacimiento);
+                persona.setNumeroHijos(numeroHijos);
+            } else {
+                throw new Exception("No se encontró persona con cédula: " + cedulaBusqueda);
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("ERROR al buscar por cédula: " + cedulaBusqueda, e);
+            throw new Exception("ERROR al buscar por cédula: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                LOGGER.error("ERROR al cerrar recursos en buscarPorCedula", e);
+            }
+        }
+
+        return persona;
     }
 }
